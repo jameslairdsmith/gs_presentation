@@ -21,3 +21,14 @@ options(htmltools.dir.version = FALSE)
 
 ### /ʃaː.'riŋ.ɡan/
 
+---
+# A boring regression
+
+## A boring result:
+
+```{r}
+fit = lm(dist ~ 1 + speed, data = cars)
+coef(summary(fit))
+```
+
+
