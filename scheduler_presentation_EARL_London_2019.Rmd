@@ -31,4 +31,16 @@ fit = lm(dist ~ 1 + speed, data = cars)
 coef(summary(fit))
 ```
 
+---
+# Further work
 
+- The {*vacationr*} package
+- Wraps the most common country holidays.
+
+---
+# Practical applications
+
+* Modelling with time series
+ - Does the pattern change on holidays?
+* Human resources
+  - Calculating leave allowances
