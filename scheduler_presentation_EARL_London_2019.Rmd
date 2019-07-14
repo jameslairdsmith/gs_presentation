@@ -5,6 +5,7 @@ author: "James Laird-Smith"
 date: "2019/09/12"
 output:
   xaringan::moon_reader:
+    css: ["default.css", "default-fonts.css", "jls.css"]
     lib_dir: libs
     nature:
       highlightStyle: github
@@ -22,6 +23,7 @@ options(htmltools.dir.version = FALSE)
 ### /ʃaː.'riŋ.ɡan/
 
 ---
+class: large
 
 - A schedule is a pattern of recurring calendar events.
 
@@ -38,6 +40,7 @@ coef(summary(fit))
 ```
 
 ---
+class: large
 # Further work
 
 - The {*vacationr*} package
@@ -45,6 +48,7 @@ coef(summary(fit))
 - Wraps the most common country holidays.
 
 ---
+class: large
 # Practical applications
 
 * Modelling with time series
