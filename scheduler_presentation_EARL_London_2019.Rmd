@@ -1,0 +1,23 @@
+---
+title: "Introducing {scheduler}"
+subtitle: "Make recurring calendar events a little easier"
+author: "James Laird-Smith"
+date: "2019/09/12"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: center, middle
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+# xaringan
+
+### /ʃaː.'riŋ.ɡan/
+
