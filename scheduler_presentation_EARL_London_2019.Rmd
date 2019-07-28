@@ -29,6 +29,53 @@ class: large
 
 - Schedules are hard.
 
+
+---
+# Comparison with `{ggplot2}`
+
+.pull-left[
+### `{ggplot2}`
+
+- .red[**Data visualisations**] can occur in almost limitless variety.
+
+- Implements a .red[**grammar of graphics**]
+]
+
+.pull-right[
+### `{scheduler}`
+
+- .red[**Schedules**] can occur in almost limitless variety.
+
+- Implements a .red[**grammar of schedules**]
+]
+---
+
+## Comparison with `{ggplot2}`
+--
+
+.pull-left[
+### `{ggplot2}`
+]
+.pull-right[
+### `{scheduler}`
+]
+--
+.pull-left[
+- .red[**Data visualisations**] can occur in almost limitless variety.
+]
+--
+.pull-right[
+- .red[**Schedules**] can occur in almost limitless variety.
+]
+--
+.pull-left[
+- Implements a .red[**grammar of graphics**]
+]
+--
+.pull-right[
+- Implements a .red[**grammar of schedules**]
+]
+
 ---
 # A boring regression
 

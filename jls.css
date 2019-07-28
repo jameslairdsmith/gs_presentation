@@ -1,2 +1,15 @@
 .large { font-size: 150% }
 .small { font-size: 70% }
+.red { color: red; }
+
+/* .pull-right ~ * {
+  clear: left;
+} */
+
+ .pull-left ~ * {
+  clear: right;
+} 
+
+.pull-left {
+  clear: right;
+} 
