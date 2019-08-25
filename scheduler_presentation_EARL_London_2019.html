@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
-    <title>Introducing {scheduler}</title>
+    <title>Introducing {gs}</title>
     <meta charset="utf-8" />
     <meta name="author" content="James Laird-Smith" />
     <link rel="stylesheet" href="default.css" type="text/css" />
@@ -10,49 +10,72 @@
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
 
-# Introducing {scheduler}
-## Make recurring calendar events a little easier
-### James Laird-Smith
-### 2019/09/12
+class: left, top
+
+
+
+# Introducing `{gs}`
+
+### A grammar of recurring calendar events
+.pull-left[
+##### James Laird-Smith  
+##### EARL London  
+##### 12 September 2019
+]
+
+.bottom-left-img[
+
+&lt;img src="EARL_logo_dark.png" width="100%" /&gt;
+
+]
+.pull-right[
+&lt;img src="gs_hex_sticker.png" width="100%" /&gt;
+]
 
 ---
+class: large, one-quarter-spaced, one-half-para-break
 
-class: center, middle
+.top-right-img[
+&lt;img src="gs_hex_sticker.png" width="100%" /&gt;
+]
 
+.double-para-break[
+# What is `{gs}`?
+]
 
+--
 
-# xaringan
+* **An R package** for recurring calendar events (schedules). 
 
-### /ʃaː.'riŋ.ɡan/
+--
+
+* Functions for:  
+
+  + Creating schedules.
+  + Composing schedules.
+  + Working with schedules.
+
+--
+
+* **A grammar:**
+
+&gt; A grammar is a framework that lays out the minimal set of independent 
+components and a means of composing them to solve a wide range of problems
+within a domain.  
+&gt; .pull-right[*- Hadley Wickham*&lt;sup&gt;1&lt;/sup&gt;]
+
+.my-footnote[[1] It is different with Pandoc's Markdown! It is limited but should be enough for presentation purposes. Come on... You do not need a slide for the Table of Contents! Well, the Markdown support in remark.js [may be improved](https://github.com/gnab/remark/issues/142) in the future.]
 
 ---
 class: large
-
-- A schedule is a pattern of recurring calendar events.
+# Why `{gs}`?
 
 - Schedules are hard.
 
+- Seem to create complexity.
 
----
-# Comparison with `{ggplot2}`
 
-.pull-left[
-### `{ggplot2}`
-
-- .red[**Data visualisations**] can occur in almost limitless variety.
-
-- Implements a .red[**grammar of graphics**]
-]
-
-.pull-right[
-### `{scheduler}`
-
-- .red[**Schedules**] can occur in almost limitless variety.
-
-- Implements a .red[**grammar of schedules**]
-]
 ---
 
 ## Comparison with `{ggplot2}`

@@ -1,53 +1,92 @@
 ---
-title: "Introducing {scheduler}"
-subtitle: "Make recurring calendar events a little easier"
+title: "Introducing {gs}"
+subtitle: "A grammar of recurring calendar events"
 author: "James Laird-Smith"
 date: "2019/09/12"
 output:
   xaringan::moon_reader:
     css: ["default.css", "default-fonts.css", "jls.css"]
     lib_dir: libs
+    seal: false
     nature:
+      titleSlideClass: [left, middle]
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
 ---
-class: center, middle
+class: left, top
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 ```
 
-# xaringan
+# Introducing `{gs}`
 
-### /ʃaː.'riŋ.ɡan/
+### A grammar of recurring calendar events
+.pull-left[
+##### James Laird-Smith  
+##### EARL London  
+##### 12 September 2019
+]
+
+.bottom-left-img[
+
+```{r echo=FALSE,  out.width="100%"}
+knitr::include_graphics("EARL_logo_dark.png")
+```
+
+]
+.pull-right[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
+---
+class: large, one-quarter-spaced, one-half-para-break
+
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
+.double-para-break[
+# What is `{gs}`?
+]
+
+--
+
+* **An R package** for recurring calendar events (schedules). 
+
+--
+
+* Functions for:  
+
+  + Creating schedules.
+  + Composing schedules.
+  + Working with schedules.
+
+--
+
+* **A grammar:**
+
+> A grammar is a framework that lays out the minimal set of independent 
+components and a means of composing them to solve a wide range of problems
+within a domain.  
+> .pull-right[*- Hadley Wickham*<sup>1</sup>]
+
+.my-footnote[[1] It is different with Pandoc's Markdown! It is limited but should be enough for presentation purposes. Come on... You do not need a slide for the Table of Contents! Well, the Markdown support in remark.js [may be improved](https://github.com/gnab/remark/issues/142) in the future.]
 
 ---
 class: large
-
-- A schedule is a pattern of recurring calendar events.
+# Why `{gs}`?
 
 - Schedules are hard.
 
+- Seem to create complexity.
 
----
-# Comparison with `{ggplot2}`
 
-.pull-left[
-### `{ggplot2}`
-
-- .red[**Data visualisations**] can occur in almost limitless variety.
-
-- Implements a .red[**grammar of graphics**]
-]
-
-.pull-right[
-### `{scheduler}`
-
-- .red[**Schedules**] can occur in almost limitless variety.
-
-- Implements a .red[**grammar of schedules**]
-]
 ---
 
 ## Comparison with `{ggplot2}`
