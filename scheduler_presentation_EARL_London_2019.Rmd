@@ -51,6 +51,41 @@ knitr::include_graphics("gs_hex_sticker.png")
 ```
 ]
 
+# Why `{gs}`?
+
+--
+
+- R already has tools for dates and times.  
+
+  - Eg. `base`, `lubridate` etc.
+  - These can create evenly spaced events.
+  
+--
+
+- R has few tools for schedules **when the event pattern is irregular**.
+  
+  - Eg. Summer Bank Holiday (last Monday in August)
+  
+--
+  
+- Schedules can get strangely complicated.
+
+  - How would you program an event occuring on the last Monday OR Wednesday
+    in August?
+    
+--
+
+- Schedules can be important.
+
+---
+class: large, one-quarter-spaced, one-half-para-break
+
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
 .double-para-break[
 # What is `{gs}`?
 ]
@@ -82,12 +117,277 @@ Late: We Need to Rethink Our Undergraduate Curriculum from the Ground Up” by
 G. Cobb, *The American Statistician*, 69.]
 
 ---
-class: large
-# Why `{gs}`?
+class: large, one-quarter-spaced, one-half-para-break
 
-- Schedules are hard.
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
 
-- Seem to create complexity.
+# A introductory example
+
+```{r}
+library(gs)
+library(magrittr)
+```
+
+--
+
+- How would you schedule New Year's Day?
+
+--
+
+- What is special about New Year's Day?
+
+  - The first day of the year.
+  
+--
+
+**`on_yday()`** is a dedicated function to make a schedule of events occurring on
+certain days of the year.
+
+```{r eval=FALSE, echo=TRUE}
+on_yday(1)
+```
+
+---
+class: large, one-quarter-spaced, one-half-para-break
+
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
+# Basic schedules
+
+- Built on `lubridate` accessor functions:
+
+--
+
+```{r}
+lubridate::yday(as.Date("2000-01-01"))
+```
+
+--
+
+```{r eval=FALSE, echo=TRUE}
+on_yday(1)
+```
+
+--
+
+- Almost all are implemented:
+  
+```{r}
+lubridate::wday(as.Date("2000-01-01"))
+```
+
+--
+
+```{r eval=FALSE, echo=TRUE}
+on_wday(7)
+```
+
+---
+class: one-quarter-spaced, one-half-para-break
+
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
+# Using schedules
+
+--
+
+- Schedules can be made into objects:
+
+```{r}
+on_new_years_day <- on_yday(1)
+```
+
+--
+
+- Once you have a schedule object, you can test whether certain dates fall
+  on it. This is done using the **`happen()`** function.
+  
+--
+  
+```{r}
+my_dates <- seq.Date(from = as.Date("2000-01-01"),
+                     to = as.Date("2000-01-05"),
+                     by = "1 day")
+
+my_dates
+```
+
+--
+
+```{r}
+happen(on_new_years_day, my_dates)
+```
+
+---
+class: one-quarter-spaced, one-half-para-break
+
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
+# Using schedules (cont.)
+
+- Once we have a schedule object, we can get the events from it using the
+  **`schedule_days()`** function.
+  
+--
+  
+```{r, error=TRUE}
+schedule_days(on_new_years_day)
+```
+
+--
+
+```{r}
+schedule_days(on_new_years_day, 
+              from = as.Date("2000-01-01"),
+              to = as.Date("2004-12-31"))
+```
+
+--
+
+```{r}
+schedule_days(on_new_years_day, from = 2000, to = 2004)
+```
+
+---
+class: one-quarter-spaced, one-half-para-break
+
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
+# Composing schedules
+
+- Say you now wanted to create a schedule for Christmas day.
+
+--
+
+- What is special about Christmas day?
+
+  - Use **`on_yday()`** again? Is it the 359th day of the year? Not always. Not
+    in a leap year where it is the 360th.
+    
+  - It is always the 25th of December. 
+  
+--
+  
+```{r}
+in_december <- in_month(12)     # All days in December!
+on_twenty_fifth <- on_mday(25)  # The 25th day of every month!
+```
+  
+--
+
+- There is a function to find the intersection of two schedules called 
+  **`only_occur()`**.
+  
+```{r}
+on_christmas_day <- only_occur(in_month(12), on_mday(25))
+```
+
+--
+
+```{r}
+schedule_days(on_christmas_day, from = 2000, to = 2004)
+```
+  
+---
+class: one-quarter-spaced, one-half-para-break
+
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
+# Composing schedules (2)
+
+--
+
+- Say I wanted only Christmas days occuring on Sunday:
+
+```{r}
+on_christmas_day <- only_occur(in_month(12), on_mday(25))
+```
+
+--
+
+```{r}
+on_chrismas_sunday <- only_occur(on_christmas_day, on_wday(1))
+```
+
+--
+
+- Getting the occurances this millennium.
+
+```{r}
+schedule_days(on_chrismas_sunday, from = 2000, to = 2019)
+```
+
+--
+
+I could also use the pipe (**`%>%`**) operator to get the same result:
+
+```{r}
+on_chrismas_sunday <-
+  on_mday(25) %>% 
+  only_occur(in_month(12)) %>% 
+  only_occur(on_wday(1))
+```
+
+
+--
+
+
+---
+class: one-quarter-spaced, one-half-para-break
+
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
+# Composing schedules (3)
+
+- What if we wanted to do the reverse, which is to combine the events of two
+  schedules.
+  
+  - For this there is the **`also_occur()`**
+
+```{r}
+on_public_holidays <- also_occur(on_christmas_day, on_new_years_day)
+```
+
+You can do the same as before
+
+  
+
+
+---
+
+| `lubridate` | `gs` | 
+|:------|:-----|
+| `yday()`| `on_yday()`| 
+| 123 | 123 | 
+| 1 | 1 |
 
 
 ---

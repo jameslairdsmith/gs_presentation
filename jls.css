@@ -67,3 +67,15 @@
   padding-right: 4em;
   font-size: 50%;
 }
+
+.remark-slide-number {
+  font-size: 20px;
+}
+
+h1 {
+  margin-bottom: 1em;
+}
+
+.remark-code {
+    font-size: 18px;
+}
