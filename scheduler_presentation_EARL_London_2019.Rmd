@@ -378,8 +378,6 @@ on_public_holidays <- also_occur(on_christmas_day, on_new_years_day)
 
 You can do the same as before
 
-  
-
 
 ---
 
