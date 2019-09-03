@@ -20,6 +20,12 @@ class: left, top
 options(htmltools.dir.version = FALSE)
 ```
 
+```{r, echo=FALSE}
+include_my_hex <- function(){
+  knitr::include_graphics("https://raw.githubusercontent.com/jameslairdsmith/gs_presentation/master/gs_hex_sticker.png")}
+```
+
+
 # Introducing `{gs}`
 
 ### A grammar of recurring calendar events
@@ -38,7 +44,7 @@ knitr::include_graphics("EARL_logo_dark.png")
 ]
 .pull-right[
 ```{r echo=FALSE, fig.pos="r", out.width="100%"}
-knitr::include_graphics("gs_hex_sticker.png")
+include_my_hex()
 ```
 ]
 
@@ -47,7 +53,7 @@ class: large, one-quarter-spaced, one-half-para-break
 
 .top-right-img[
 ```{r echo=FALSE, fig.pos="r", out.width="100%"}
-knitr::include_graphics("gs_hex_sticker.png")
+include_my_hex()
 ```
 ]
 
