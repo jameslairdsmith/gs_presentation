@@ -79,3 +79,5 @@ h1 {
 .remark-code {
     font-size: 18px;
 }
+
+.remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even) { background: none !important }

@@ -18,16 +18,7 @@ class: left, top
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
-```
-
-```{r, echo=FALSE}
-include_my_hex <- function(){
-  knitr::include_graphics("https://raw.githubusercontent.com/jameslairdsmith/gs_presentation/master/gs_hex_sticker.png")}
-```
-
-```{r, echo=FALSE}
-include_earl_logo <- function(){
-  knitr::include_graphics("https://raw.githubusercontent.com/jameslairdsmith/gs_presentation/master/gs_hex_sticker.png")}
+library(kableExtra)
 ```
 
 # Introducing `{gs}`
@@ -157,7 +148,7 @@ library(magrittr)
 **`on_yday()`** is a dedicated function to make a schedule of events occurring on
 certain days of the year.
 
-```{r eval=FALSE, echo=TRUE}
+```{r}
 on_yday(1)
 ```
 
@@ -182,7 +173,7 @@ lubridate::yday(as.Date("2000-01-01"))
 
 --
 
-```{r eval=FALSE, echo=TRUE}
+```{r}
 on_yday(1)
 ```
 
@@ -199,6 +190,48 @@ lubridate::wday(as.Date("2000-01-01"))
 ```{r eval=FALSE, echo=TRUE}
 on_wday(7)
 ```
+---
+class: one-quarter-spaced, one-half-para-break
+
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
+# Basic schedules (cont.)
+
+- **`lubridate`** has date accessor functions.
+- Most have equivalent **`gs`** schedules.
+
+
+.middle[
+
+```{r, echo=FALSE}
+tibble::tribble(
+  ~`lubridate::`, ~`gs::`,
+  "wday()",   "on_wday()",
+  "mday()",   "on_mday()",
+  "qday()",   "on_qday()",
+  "yday()",   "on_yday()",
+  "week()",   "in_week()",
+  "month()",  "in_month()",
+  "quarter()","in_quarter()",
+  "semester()","in_semester()",
+  "year()",   "in_year()"
+) %>% 
+  knitr::kable(format = "html", 
+               table.attr = "style='width:80%;'",
+               #table.attr = "style='background:#0;'",
+               stripe_color = NA,
+               bootstrap_options = c("table"),
+               font_size = 28) %>%
+  kableExtra::kable_styling(full_width = T)
+```
+
+]
+
+
 
 ---
 class: one-quarter-spaced, one-half-para-break
@@ -256,8 +289,9 @@ knitr::include_graphics("gs_hex_sticker.png")
   
 --
   
-```{r, error=TRUE}
+```{r, error=TRUE, eval=FALSE}
 schedule_days(on_new_years_day)
+## Produces an error!
 ```
 
 --
@@ -340,7 +374,7 @@ on_christmas_day <- only_occur(in_month(12), on_mday(25))
 --
 
 ```{r}
-on_chrismas_sunday <- only_occur(on_christmas_day, on_wday(1))
+on_christmas_sunday <- only_occur(on_christmas_day, on_wday(1))
 ```
 
 --
@@ -348,7 +382,7 @@ on_chrismas_sunday <- only_occur(on_christmas_day, on_wday(1))
 - Getting the occurances this millennium.
 
 ```{r}
-schedule_days(on_chrismas_sunday, from = 2000, to = 2019)
+schedule_days(on_christmas_sunday, from = 2000, to = 2019)
 ```
 
 --
@@ -356,7 +390,7 @@ schedule_days(on_chrismas_sunday, from = 2000, to = 2019)
 I could also use the pipe (**`%>%`**) operator to get the same result:
 
 ```{r}
-on_chrismas_sunday <-
+on_christmas_sunday <-
   on_mday(25) %>% 
   only_occur(in_month(12)) %>% 
   only_occur(on_wday(1))
@@ -386,69 +420,16 @@ knitr::include_graphics("gs_hex_sticker.png")
 on_public_holidays <- also_occur(on_christmas_day, on_new_years_day)
 ```
 
-You can do the same as before
-
-
----
-
-| `lubridate` | `gs` | 
-|:------|:-----|
-| `yday()`| `on_yday()`| 
-| 123 | 123 | 
-| 1 | 1 |
-
-
----
-
-## Comparison with `{ggplot2}`
---
-
-.pull-left[
-### `{ggplot2}`
-]
-.pull-right[
-### `{scheduler}`
-]
---
-.pull-left[
-- .red[**Data visualisations**] can occur in almost limitless variety.
-]
---
-.pull-right[
-- .red[**Schedules**] can occur in almost limitless variety.
-]
---
-.pull-left[
-- Implements a .red[**grammar of graphics**]
-]
---
-.pull-right[
-- Implements a .red[**grammar of schedules**]
-]
-
----
-# A boring regression
-
-## A boring result:
+You can do the same as before:
 
 ```{r}
-fit = lm(dist ~ 1 + speed, data = cars)
-coef(summary(fit))
+schedule_days(on_public_holidays, from = 2019, to = 2020)
 ```
 
----
-class: large
-# Further work
-
-- The {*vacationr*} package
-
-- Wraps the most common country holidays.
 
 ---
-class: large
-# Practical applications
+class: middle, center
 
-* Modelling with time series
- - Does the pattern change on holidays?
-* Human resources
-  - Calculating leave allowances
+# Thank you!
+
+
