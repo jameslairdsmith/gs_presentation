@@ -25,6 +25,10 @@ include_my_hex <- function(){
   knitr::include_graphics("https://raw.githubusercontent.com/jameslairdsmith/gs_presentation/master/gs_hex_sticker.png")}
 ```
 
+```{r, echo=FALSE}
+include_earl_logo <- function(){
+  knitr::include_graphics("https://raw.githubusercontent.com/jameslairdsmith/gs_presentation/master/gs_hex_sticker.png")}
+```
 
 # Introducing `{gs}`
 
@@ -44,7 +48,7 @@ knitr::include_graphics("EARL_logo_dark.png")
 ]
 .pull-right[
 ```{r echo=FALSE, fig.pos="r", out.width="100%"}
-include_my_hex()
+knitr::include_graphics("gs_hex_sticker.png")
 ```
 ]
 
@@ -53,7 +57,7 @@ class: large, one-quarter-spaced, one-half-para-break
 
 .top-right-img[
 ```{r echo=FALSE, fig.pos="r", out.width="100%"}
-include_my_hex()
+knitr::include_graphics("gs_hex_sticker.png")
 ```
 ]
 
