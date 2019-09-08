@@ -5,7 +5,10 @@ author: "James Laird-Smith"
 date: "2019/09/12"
 output:
   xaringan::moon_reader:
-    css: ["default.css", "default-fonts.css", "jls.css"]
+    css: ["default.css", 
+          "default-fonts.css", 
+          "jls.css", 
+          "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"]
     lib_dir: libs
     seal: false
     nature:
@@ -44,6 +47,10 @@ knitr::include_graphics("gs_hex_sticker.png")
 ]
 
 ---
+layout: true
+class: animated, fadeIn
+
+---
 class: large, one-quarter-spaced, one-half-para-break
 
 .top-right-img[
@@ -66,18 +73,10 @@ knitr::include_graphics("gs_hex_sticker.png")
 - R has few tools for schedules **when the event pattern is irregular**.
   
   - Eg. Summer Bank Holiday (last Monday in August)
+  - Easter
+  - Strange bespoke examples.
   
---
-  
-- Schedules can get strangely complicated.
-
-  - How would you program an event occuring on the last Monday OR Wednesday
-    in August?
-    
---
-
-- Schedules can be important.
-
+- Often important (like financial contracts).
 ---
 class: large, one-quarter-spaced, one-half-para-break
 
@@ -102,20 +101,51 @@ knitr::include_graphics("gs_hex_sticker.png")
   + Creating schedules.
   + Composing schedules.
   + Working with schedules.
+  + (The whole schedule lifecycle.)
 
 --
 
-* **A grammar:**
+* **A grammar**
+ + Solve your own problems.
 
-> A grammar is a framework that lays out the minimal set of independent 
-components and a means of composing them to solve a wide range of problems
-within a domain.  
-> .pull-right[*- Hadley Wickham*<sup>1</sup>]
+---
+class: large, one-quarter-spaced, one-half-para-break
 
-.my-footnote[<sup>1</sup> Wickham, H., 2015. Teaching Safe-Stats, Not Statistical 
-Abstinence. online supplement discussion of “Mere Renovation is Too Little Too 
-Late: We Need to Rethink Our Undergraduate Curriculum from the Ground Up” by 
-G. Cobb, *The American Statistician*, 69.]
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
+.double-para-break[
+# What can `{gs}` do?
+]
+
+- Simple schedules
+
+--
+
+- Holiday shortcuts (i.e. Easter)
+
+--
+
+- Nth (last) occurrence in a period (eg. Bank holidays)
+
+--
+  
+- Directional schedules
+  - Eg. after US Thanksgiving but before Black Friday
+
+--
+  
+- Incremental schedules
+  - Eg. every 5 business days
+  
+--
+  
+- Forthcoming
+  - More holidays (in their own package)
+  - Rolling dates
 
 ---
 class: large, one-quarter-spaced, one-half-para-break
@@ -132,8 +162,6 @@ knitr::include_graphics("gs_hex_sticker.png")
 library(gs)
 library(magrittr)
 ```
-
---
 
 - How would you schedule New Year's Day?
 
@@ -177,19 +205,7 @@ lubridate::yday(as.Date("2000-01-01"))
 on_yday(1)
 ```
 
---
 
-- Almost all are implemented:
-  
-```{r}
-lubridate::wday(as.Date("2000-01-01"))
-```
-
---
-
-```{r eval=FALSE, echo=TRUE}
-on_wday(7)
-```
 ---
 class: one-quarter-spaced, one-half-para-break
 
@@ -319,11 +335,11 @@ knitr::include_graphics("gs_hex_sticker.png")
 
 # Composing schedules
 
-- Say you now wanted to create a schedule for Christmas day.
+- Say you now wanted to create a schedule for Christmas Day.
 
 --
 
-- What is special about Christmas day?
+- What is special about Christmas Day?
 
   - Use **`on_yday()`** again? Is it the 359th day of the year? Not always. Not
     in a leap year where it is the 360th.
@@ -333,7 +349,7 @@ knitr::include_graphics("gs_hex_sticker.png")
 --
   
 ```{r}
-in_december <- in_month(12)     # All days in December!
+in_december <- in_month("Dec")  # All days in December!
 on_twenty_fifth <- on_mday(25)  # The 25th day of every month!
 ```
   
@@ -343,7 +359,7 @@ on_twenty_fifth <- on_mday(25)  # The 25th day of every month!
   **`only_occur()`**.
   
 ```{r}
-on_christmas_day <- only_occur(in_month(12), on_mday(25))
+on_christmas_day <- only_occur(in_month("Dec"), on_mday(25))
 ```
 
 --
@@ -365,21 +381,21 @@ knitr::include_graphics("gs_hex_sticker.png")
 
 --
 
-- Say I wanted only Christmas days occuring on Sunday:
+- Say I wanted only Christmas Days occurring on Sunday:
 
 ```{r}
-on_christmas_day <- only_occur(in_month(12), on_mday(25))
+on_christmas_day <- only_occur(in_month("Dec"), on_mday(25))
 ```
 
 --
 
 ```{r}
-on_christmas_sunday <- only_occur(on_christmas_day, on_wday(1))
+on_christmas_sunday <- only_occur(on_christmas_day, on_wday("Sun"))
 ```
 
 --
 
-- Getting the occurances this millennium.
+- Getting the occurrences this millennium.
 
 ```{r}
 schedule_days(on_christmas_sunday, from = 2000, to = 2019)
@@ -392,8 +408,8 @@ I could also use the pipe (**`%>%`**) operator to get the same result:
 ```{r}
 on_christmas_sunday <-
   on_mday(25) %>% 
-  only_occur(in_month(12)) %>% 
-  only_occur(on_wday(1))
+  only_occur(in_month("Dec")) %>% 
+  only_occur(on_wday("Sun"))
 ```
 
 
@@ -414,7 +430,10 @@ knitr::include_graphics("gs_hex_sticker.png")
 - What if we wanted to do the reverse, which is to combine the events of two
   schedules.
   
+  
   - For this there is the **`also_occur()`**
+  
+--
 
 ```{r}
 on_public_holidays <- also_occur(on_christmas_day, on_new_years_day)
@@ -432,4 +451,38 @@ class: middle, center
 
 # Thank you!
 
+## Questions?
+
+---
+class: large, one-quarter-spaced, one-half-para-break
+
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
+.double-para-break[
+# Appendix A
+]
+
+What makes `gs` a grammar?
+
+<br />
+
+> A grammar is a framework that lays out the minimal set of independent 
+components and a means of composing them to solve a wide range of problems
+within a domain.  
+> .pull-right[*- Hadley Wickham*<sup>1</sup>]  
+
+<br />
+
+**{`gs`}** is a minimal set of independent **schedules** and a means of 
+composing them to make a wide range of **patterns for recurring calendar 
+events.**
+
+.my-footnote[<sup>1</sup> Wickham, H., 2015. Teaching Safe-Stats, Not Statistical 
+Abstinence. online supplement discussion of “Mere Renovation is Too Little Too 
+Late: We Need to Rethink Our Undergraduate Curriculum from the Ground Up” by 
+G. Cobb, *The American Statistician*, 69.]
 

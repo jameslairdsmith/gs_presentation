@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="default.css" type="text/css" />
     <link rel="stylesheet" href="default-fonts.css" type="text/css" />
     <link rel="stylesheet" href="jls.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -35,6 +36,10 @@ class: left, top
 ]
 
 ---
+layout: true
+class: animated, fadeIn
+
+---
 class: large, one-quarter-spaced, one-half-para-break
 
 .top-right-img[
@@ -55,18 +60,10 @@ class: large, one-quarter-spaced, one-half-para-break
 - R has few tools for schedules **when the event pattern is irregular**.
   
   - Eg. Summer Bank Holiday (last Monday in August)
+  - Easter
+  - Strange bespoke examples.
   
---
-  
-- Schedules can get strangely complicated.
-
-  - How would you program an event occuring on the last Monday OR Wednesday
-    in August?
-    
---
-
-- Schedules can be important.
-
+- Often important (like financial contracts).
 ---
 class: large, one-quarter-spaced, one-half-para-break
 
@@ -89,20 +86,49 @@ class: large, one-quarter-spaced, one-half-para-break
   + Creating schedules.
   + Composing schedules.
   + Working with schedules.
+  + (The whole schedule lifecycle.)
 
 --
 
-* **A grammar:**
+* **A grammar**
+ + Solve your own problems.
 
-&gt; A grammar is a framework that lays out the minimal set of independent 
-components and a means of composing them to solve a wide range of problems
-within a domain.  
-&gt; .pull-right[*- Hadley Wickham*&lt;sup&gt;1&lt;/sup&gt;]
+---
+class: large, one-quarter-spaced, one-half-para-break
 
-.my-footnote[&lt;sup&gt;1&lt;/sup&gt; Wickham, H., 2015. Teaching Safe-Stats, Not Statistical 
-Abstinence. online supplement discussion of “Mere Renovation is Too Little Too 
-Late: We Need to Rethink Our Undergraduate Curriculum from the Ground Up” by 
-G. Cobb, *The American Statistician*, 69.]
+.top-right-img[
+&lt;img src="gs_hex_sticker.png" width="100%" /&gt;
+]
+
+.double-para-break[
+# What can `{gs}` do?
+]
+
+- Simple schedules
+
+--
+
+- Holiday shortcuts (i.e. Easter)
+
+--
+
+- Nth (last) occurrence in a period (eg. Bank holidays)
+
+--
+  
+- Directional schedules
+  - Eg. after US Thanksgiving but before Black Friday
+
+--
+  
+- Incremental schedules
+  - Eg. every 5 business days
+  
+--
+  
+- Forthcoming
+  - More holidays (in their own package)
+  - Rolling dates
 
 ---
 class: large, one-quarter-spaced, one-half-para-break
@@ -118,8 +144,6 @@ class: large, one-quarter-spaced, one-half-para-break
 library(gs)
 library(magrittr)
 ```
-
---
 
 - How would you schedule New Year's Day?
 
@@ -176,25 +200,7 @@ on_yday(1)
 ## A schedule of events containing 1 term(s)
 ```
 
---
 
-- Almost all are implemented:
-  
-
-```r
-lubridate::wday(as.Date("2000-01-01"))
-```
-
-```
-## [1] 7
-```
-
---
-
-
-```r
-on_wday(7)
-```
 ---
 class: one-quarter-spaced, one-half-para-break
 
@@ -363,11 +369,11 @@ class: one-quarter-spaced, one-half-para-break
 
 # Composing schedules
 
-- Say you now wanted to create a schedule for Christmas day.
+- Say you now wanted to create a schedule for Christmas Day.
 
 --
 
-- What is special about Christmas day?
+- What is special about Christmas Day?
 
   - Use **`on_yday()`** again? Is it the 359th day of the year? Not always. Not
     in a leap year where it is the 360th.
@@ -378,7 +384,7 @@ class: one-quarter-spaced, one-half-para-break
   
 
 ```r
-in_december &lt;- in_month(12)     # All days in December!
+in_december &lt;- in_month("Dec")  # All days in December!
 on_twenty_fifth &lt;- on_mday(25)  # The 25th day of every month!
 ```
   
@@ -389,7 +395,7 @@ on_twenty_fifth &lt;- on_mday(25)  # The 25th day of every month!
   
 
 ```r
-on_christmas_day &lt;- only_occur(in_month(12), on_mday(25))
+on_christmas_day &lt;- only_occur(in_month("Dec"), on_mday(25))
 ```
 
 --
@@ -414,23 +420,23 @@ class: one-quarter-spaced, one-half-para-break
 
 --
 
-- Say I wanted only Christmas days occuring on Sunday:
+- Say I wanted only Christmas Days occurring on Sunday:
 
 
 ```r
-on_christmas_day &lt;- only_occur(in_month(12), on_mday(25))
+on_christmas_day &lt;- only_occur(in_month("Dec"), on_mday(25))
 ```
 
 --
 
 
 ```r
-on_christmas_sunday &lt;- only_occur(on_christmas_day, on_wday(1))
+on_christmas_sunday &lt;- only_occur(on_christmas_day, on_wday("Sun"))
 ```
 
 --
 
-- Getting the occurances this millennium.
+- Getting the occurrences this millennium.
 
 
 ```r
@@ -449,8 +455,8 @@ I could also use the pipe (**`%&gt;%`**) operator to get the same result:
 ```r
 on_christmas_sunday &lt;-
   on_mday(25) %&gt;% 
-  only_occur(in_month(12)) %&gt;% 
-  only_occur(on_wday(1))
+  only_occur(in_month("Dec")) %&gt;% 
+  only_occur(on_wday("Sun"))
 ```
 
 
@@ -469,7 +475,10 @@ class: one-quarter-spaced, one-half-para-break
 - What if we wanted to do the reverse, which is to combine the events of two
   schedules.
   
+  
   - For this there is the **`also_occur()`**
+  
+--
 
 
 ```r
@@ -492,6 +501,39 @@ schedule_days(on_public_holidays, from = 2019, to = 2020)
 class: middle, center
 
 # Thank you!
+
+## Questions?
+
+---
+class: large, one-quarter-spaced, one-half-para-break
+
+.top-right-img[
+&lt;img src="gs_hex_sticker.png" width="100%" /&gt;
+]
+
+.double-para-break[
+# Appendix A
+]
+
+What makes `gs` a grammar?
+
+&lt;br /&gt;
+
+&gt; A grammar is a framework that lays out the minimal set of independent 
+components and a means of composing them to solve a wide range of problems
+within a domain.  
+&gt; .pull-right[*- Hadley Wickham*&lt;sup&gt;1&lt;/sup&gt;]  
+
+&lt;br /&gt;
+
+**{`gs`}** is a minimal set of independent **schedules** and a means of 
+composing them to make a wide range of **patterns for recurring calendar 
+events.**
+
+.my-footnote[&lt;sup&gt;1&lt;/sup&gt; Wickham, H., 2015. Teaching Safe-Stats, Not Statistical 
+Abstinence. online supplement discussion of “Mere Renovation is Too Little Too 
+Late: We Need to Rethink Our Undergraduate Curriculum from the Ground Up” by 
+G. Cobb, *The American Statistician*, 69.]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
