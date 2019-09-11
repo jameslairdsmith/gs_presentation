@@ -445,6 +445,21 @@ You can do the same as before:
 schedule_days(on_public_holidays, from = 2019, to = 2020)
 ```
 
+---
+class: one-quarter-spaced, one-half-para-break
+
+.top-right-img[
+```{r echo=FALSE, fig.pos="r", out.width="100%"}
+knitr::include_graphics("gs_hex_sticker.png")
+```
+]
+
+# Finding out more
+
+```{r eval=FALSE, echo=TRUE}
+https://jameslairdsmith.github.io/gs/
+```
+
 
 ---
 class: middle, center
